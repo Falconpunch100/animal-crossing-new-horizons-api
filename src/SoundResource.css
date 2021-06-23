@@ -1,0 +1,14 @@
+#song-grid .song-columns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.order {
+    font-size: 0.4rem;
+}
+
+.ui.placeholder .header:not(:first-child)::before, .ui.placeholder .image:not(:first-child)::before, .ui.placeholder .paragraph:not(:first-child)::before {
+    height: 0;
+}

@@ -1,0 +1,22 @@
+body {
+    background-color: rgb(176, 255, 176);
+}
+
+.villagerInfo {
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    text-align: center;
+}
+
+.villagerInfo p {
+    margin: 0.2rem 0px;
+    text-align: left;
+}
+
+.villagerQuote {
+    margin-top: 5px;
+}

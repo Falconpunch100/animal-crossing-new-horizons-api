@@ -1,0 +1,15 @@
+#gridbugs {
+    margin-top: 20px;
+}
+
+#gridbugs .card {
+    width: 200px;
+}
+
+.card {
+    width: 200px;
+}
+
+.imageCard {
+    width: 200px;
+}
