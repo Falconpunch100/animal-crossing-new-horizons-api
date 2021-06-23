@@ -79,20 +79,6 @@ function Navbar() {
                         as={"li"}
                     /></Link>
                 <Menu.Menu position='right'>
-                    <Link to={LOGIN}>
-                        <Menu.Item
-                            name='log in'
-                            active={activeItem === 'log in'}
-                            onClick={handleItemClick}
-                            as={"li"}
-                        /></Link>
-                    <Link to={SIGNUP}>
-                        <Menu.Item
-                            name='sign up'
-                            active={activeItem === 'sign up'}
-                            onClick={handleItemClick}
-                            as={"li"}
-                        /></Link>
                     <Menu.Item>
                         <Searchbar></Searchbar>
                     </Menu.Item>

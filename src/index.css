@@ -1,9 +1,11 @@
 @font-face {
-  font-family: "acFont";
-  src: local("acFont") url("./ac-font.ttf") format("truetype");
+  font-family: 'FinkHeavy';
+  src: url('./FinkHeavy.woff2') format('woff2') url('./FinkHeavy.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
 }
 
-#root {
+body #root {
   margin-top: 5rem;
-  font-family: acFont;
+  font-family: FinkHeavy;
 }

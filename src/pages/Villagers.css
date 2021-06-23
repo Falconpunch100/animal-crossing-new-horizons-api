@@ -10,6 +10,7 @@ body {
     align-items: center;
     padding: 5px 15px;
     text-align: center;
+    font-family: FinkHeavy;
 }
 
 .villagerInfo p {
