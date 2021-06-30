@@ -13,3 +13,7 @@
 .imageCard {
     width: 200px;
 }
+
+.ui.modal > .content > .description.resourceDesc {
+    flex: 1 1 auto;  
+}

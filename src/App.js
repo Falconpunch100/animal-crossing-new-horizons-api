@@ -6,16 +6,10 @@ import { lazy, Suspense } from "react"
 import Navbar from "./Navbar.js"
 import BottomBar from "./BottomBar.js"
 import resourceContext from "./context/resource.js"
+import BottombarContext from './context/bottombar.js'
 import { useState } from "react"
 import "./index.css"
 
-
-// const Signup = lazy(() => {
-//   return import("./pages/Signup.js")
-// })
-// const Login = lazy(() => {
-//   return import("./pages/Login.js")
-// })
 const Resources = lazy(() => {
   return import("./pages/Resources.js")
 })
@@ -29,47 +23,53 @@ const Villagers = lazy(() => {
 function App() {
   const [resources, setResources] = useState(null)
   const [fullList, setFullList] = useState(null)
+  const [visible, setVisible] = useState(false)
+  const [items, setItems] = useState([])
   return (
     <div className="App">
       <BrowserRouter>
-        <resourceContext.Provider value={{
-          resources, setResources, fullList, setFullList
+        <BottombarContext.Provider value={{
+          visible, setVisible, items, setItems
         }}>
-          <Navbar></Navbar>
-          <Suspense fallback={<Loader active={true} size="huge"></Loader>}>
-            <Sidebar.Pushable>
-            <BottomBar></BottomBar>
-              <Sidebar.Pusher>
-                <Route path={HOMEPAGE}>
-                </Route>
-                <Route path={BUGS}>
-                  <Resources page={"bugs"}></Resources>
-                </Route>
-                <Route path={FISH}>
-                  <Resources page={"fish"}></Resources>
-                </Route>
-                <Route path={SEACREATURES}>
-                  <Resources page={"sea"}></Resources>
-                </Route>
-                <Route path={FOSSILS}>
-                  <Resources page={"fossils"}></Resources>
-                </Route>
-                <Route path={ART}>
-                  <Resources page={"art"}></Resources>
-                </Route>
-                <Route path={SONGS}>
-                  <Songs page={"songs"}></Songs>
-                </Route>
-                <Route path={BGM}>
-                  <Songs page={"backgroundmusic"}></Songs>
-                </Route>
-                <Route path={VILLAGERS}>
-                  <Villagers></Villagers>
-                </Route>
-              </Sidebar.Pusher>
-            </Sidebar.Pushable>
-          </Suspense>
-        </resourceContext.Provider>
+          <resourceContext.Provider value={{
+            resources, setResources, fullList, setFullList
+          }}>
+            <Navbar></Navbar>
+            <Suspense fallback={<Loader active={true} size="huge"></Loader>}>
+              <Sidebar.Pushable id="pushbar">
+                <BottomBar></BottomBar>
+                <Sidebar.Pusher>
+                  <Route path={HOMEPAGE}>
+                  </Route>
+                  <Route path={BUGS}>
+                    <Resources page={"bugs"}></Resources>
+                  </Route>
+                  <Route path={FISH}>
+                    <Resources page={"fish"}></Resources>
+                  </Route>
+                  <Route path={SEACREATURES}>
+                    <Resources page={"sea"}></Resources>
+                  </Route>
+                  <Route path={FOSSILS}>
+                    <Resources page={"fossils"}></Resources>
+                  </Route>
+                  <Route path={ART}>
+                    <Resources page={"art"}></Resources>
+                  </Route>
+                  <Route path={SONGS}>
+                    <Songs page={"songs"}></Songs>
+                  </Route>
+                  <Route path={BGM}>
+                    <Songs page={"backgroundmusic"}></Songs>
+                  </Route>
+                  <Route path={VILLAGERS}>
+                    <Villagers></Villagers>
+                  </Route>
+                </Sidebar.Pusher>
+              </Sidebar.Pushable>
+            </Suspense>
+          </resourceContext.Provider>
+        </BottombarContext.Provider>
       </BrowserRouter>
     </div>
   );

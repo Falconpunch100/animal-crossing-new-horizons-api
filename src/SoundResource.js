@@ -1,7 +1,8 @@
-import { Segment, Header, Icon, Image } from "semantic-ui-react"
+import { Segment, Header, Icon } from "semantic-ui-react"
 import AudioPlayer from "./AudioPlayer.js"
 import "./SoundResource.css"
 import {tConvert} from "./utils.js"
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function SoundResource({ songInfo }) {
     let iconName = ""
@@ -17,8 +18,8 @@ function SoundResource({ songInfo }) {
     }
 
     return (
-        <Segment className="song-columns">
-            {songInfo.image_uri ? <Image size="small" src={songInfo.image_uri}></Image>: <Icon size="huge" name={iconName}></Icon>}
+        <Segment className="song-columns" id={songInfo?.name?.["name-USen"]}>
+            {songInfo.image_uri ? <LazyLoadImage alt={songInfo?.name?.["name-USen"]} className="imageSize" src={songInfo?.image_uri}></LazyLoadImage>: <Icon size="huge" name={iconName}></Icon>}
             
             <Header>
                 {songInfo?.name?.["name-USen"] ? songInfo?.name?.["name-USen"] : "Weather: " + songInfo.weather}

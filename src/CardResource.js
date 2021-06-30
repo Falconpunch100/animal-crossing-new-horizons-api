@@ -1,10 +1,13 @@
-import { Card, Icon, Image, Modal, Button, Transition } from 'semantic-ui-react'
-import { useState, useEffect } from "react"
+import { Card, Icon, Modal, Button, Transition } from 'semantic-ui-react'
+import { useState, useEffect, useContext } from "react"
 import { getDate, capitalizeWords } from "./utils.js"
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import BottombarContext from './context/bottombar.js'
 
 function CardResource({ resource }) {
     let [open, setOpen] = useState(false)
     let [trans, setTrans] = useState(false)
+    const { items, setItems } = useContext(BottombarContext)
     useEffect(() => {
         setTrans(true)
     }, [])
@@ -17,8 +20,8 @@ function CardResource({ resource }) {
             >
                 <Modal.Header>{capitalizeWords(resource?.name["name-USen"])}</Modal.Header>
                 <Modal.Content image>
-                    <Image size='massive' src={resource?.image_uri} wrapped />
-                    <Modal.Description>
+                    <LazyLoadImage src={resource?.image_uri} alt={resource?.name} />
+                    <Modal.Description className="resourceDesc">
                         {resource?.["buy-price"] && <p className='date'>Buy Price: {resource?.price || resource?.["buy-price"]} {" "}<Icon name="star" /></p>}
                         <p className='date'>Sell Price: {resource?.price || resource?.["sell-price"]} {" "}<Icon name="star" /></p>
                         {resource?.["museum-phrase"] ? <p><Icon name="earlybirds" /><b>Blathers:</b> {resource?.["museum-phrase"]}</p> : <p><Icon name="picture" /><b>Description:</b> {resource?.["museum-desc"]}</p>}
@@ -34,10 +37,10 @@ function CardResource({ resource }) {
                 </Modal.Actions>
             </Modal>
             <Transition animation={"fade in"} duration={500} visible={trans}>
-                <Card className="card" onClick={() => {
+                <Card className="card" id={resource?.name["name-USen"]} onClick={() => {
                     setOpen(true)
                 }}>
-                    <Image src={resource?.icon_uri || resource?.image_uri} wrapped ui={false} className="imageCard" />
+                    <LazyLoadImage src={resource?.icon_uri || resource?.image_uri} className="imageCard" alt={resource?.name} />
                     <Card.Content>
                         <Card.Header>{capitalizeWords(resource?.name["name-USen"])}</Card.Header>
                         <Card.Meta>
@@ -60,7 +63,14 @@ function CardResource({ resource }) {
                               Availablity: {resource?.availability !== undefined && getDate(resource?.availability["month-array-northern"])}
                         </Card.Content>
                         : null}
-
+                    <Card.Content extra>
+                        <Button onClick={e => {
+                            e.stopPropagation()
+                            const copy = items.slice()
+                            copy.push(resource)
+                            setItems(copy)
+                        }} style={{backgroundColor: "lightgreen"}}>Add To My List</Button>
+                    </Card.Content>
                 </Card>
             </Transition>
         </>

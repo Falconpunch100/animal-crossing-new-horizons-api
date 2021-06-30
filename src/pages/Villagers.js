@@ -3,6 +3,8 @@ import { Container, Grid, Placeholder, Segment, Item, Icon, Header} from "semant
 import resourceContext from "../context/resource.js"
 import { convertGender } from "../utils.js"
 import "./Villagers.css"
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ".././SoundResource.js"
 
 function Villagers() {
     const { resources, setResources, setFullList } = useContext(resourceContext)
@@ -37,9 +39,8 @@ function Villagers() {
                     resources?.map((villager) => {
                         return (
                             <Grid.Column key={villager.id} stretched={true}>
-                                <Item className="villagerInfo" style={{backgroundColor: villager["bubble-color"], color: villager["text-color"], border: `2px solid ${villager["text-color"]}`}}>
-                                    <Item.Image size='tiny' src={villager.image_uri} />
-
+                                <Item className="villagerInfo" id={villager?.name?.["name-USen"]} style={{backgroundColor: villager["bubble-color"], color: villager["text-color"], border: `2px solid ${villager["text-color"]}`}}>
+                                    <LazyLoadImage src={villager.image_uri} alt={villager?.name?.["name-USen"]} className="imageSize"/>
                                     <Item.Content>
                                         <Header size="large" style={{color: villager["text-color"]}}>{villager.name["name-USen"]}</Header>
                                         <Item.Meta>

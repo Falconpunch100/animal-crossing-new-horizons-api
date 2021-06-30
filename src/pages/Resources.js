@@ -1,7 +1,6 @@
 import { useEffect, useContext } from "react"
 import { Card, Grid, Placeholder, Container } from 'semantic-ui-react'
 import CardResource from "../CardResource.js"
-import "./placeholder.css"
 import "./items.css"
 import resourceContext from "../context/resource.js"
 

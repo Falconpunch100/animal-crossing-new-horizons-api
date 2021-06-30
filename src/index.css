@@ -9,3 +9,16 @@ body #root {
   margin-top: 5rem;
   font-family: FinkHeavy;
 }
+
+#root .ui.card > .content > .header, .ui.cards > .card > .content > .header {
+  font-family: FinkHeavy;
+}
+
+#root .ui.header {
+  font-family: FinkHeavy;
+}
+
+#pushbar {
+  overflow-y: hidden;
+}
+
