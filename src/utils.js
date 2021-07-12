@@ -61,3 +61,12 @@ export function convertGender(gender) {
         return "woman"
     }
 }
+
+export function findByName(items, nameToFind) {
+    if (items === null) return false
+    for (let i = 0; i < items.length; i++) {
+        const element = items[i];
+        if (element?.name["name-USen"] === nameToFind) return true
+    }
+    return false;
+}

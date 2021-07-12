@@ -10,6 +10,9 @@ import BottombarContext from './context/bottombar.js'
 import { useState } from "react"
 import "./index.css"
 
+const HomePage = lazy(() => {
+  return import("./pages/HomePage.js")
+})
 const Resources = lazy(() => {
   return import("./pages/Resources.js")
 })
@@ -24,7 +27,7 @@ function App() {
   const [resources, setResources] = useState(null)
   const [fullList, setFullList] = useState(null)
   const [visible, setVisible] = useState(false)
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(null)
   return (
     <div className="App">
       <BrowserRouter>
@@ -40,31 +43,16 @@ function App() {
                 <BottomBar></BottomBar>
                 <Sidebar.Pusher>
                   <Route path={HOMEPAGE}>
+                    <HomePage></HomePage>
                   </Route>
-                  <Route path={BUGS}>
-                    <Resources page={"bugs"}></Resources>
-                  </Route>
-                  <Route path={FISH}>
-                    <Resources page={"fish"}></Resources>
-                  </Route>
-                  <Route path={SEACREATURES}>
-                    <Resources page={"sea"}></Resources>
-                  </Route>
-                  <Route path={FOSSILS}>
-                    <Resources page={"fossils"}></Resources>
-                  </Route>
-                  <Route path={ART}>
-                    <Resources page={"art"}></Resources>
-                  </Route>
-                  <Route path={SONGS}>
-                    <Songs page={"songs"}></Songs>
-                  </Route>
-                  <Route path={BGM}>
-                    <Songs page={"backgroundmusic"}></Songs>
-                  </Route>
-                  <Route path={VILLAGERS}>
-                    <Villagers></Villagers>
-                  </Route>
+                  <Route path={BUGS} render = {(routeProps) => {return <Resources page={"bugs"} {...routeProps}></Resources>}}></Route>
+                  <Route path={FISH} render = {(routeProps) => {return <Resources page={"fish"} {...routeProps}></Resources>}}></Route>
+                  <Route path={SEACREATURES} render = {(routeProps) => {return <Resources page={"sea"} {...routeProps}></Resources>}}></Route>
+                  <Route path={FOSSILS} render = {(routeProps) => {return <Resources page={"fossils"} {...routeProps}></Resources>}}></Route>
+                  <Route path={ART} render = {(routeProps) => {return <Resources page={"art"} {...routeProps}></Resources>}}></Route>
+                  <Route path={SONGS} render = {(routeProps) => {return <Songs page={"songs"} {...routeProps}></Songs>}}></Route>
+                  <Route path={BGM} render = {(routeProps) => {return <Songs page={"backgroundmusic"} {...routeProps}></Songs>}}></Route>
+                  <Route path={VILLAGERS} render = {(routeProps) => {return <Villagers page={"villagers"} {...routeProps}></Villagers>}}></Route>
                 </Sidebar.Pusher>
               </Sidebar.Pushable>
             </Suspense>

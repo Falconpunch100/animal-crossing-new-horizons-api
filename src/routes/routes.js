@@ -1,4 +1,4 @@
-export const HOMEPAGE = "/"
+export const HOMEPAGE = "/home"
 export const SIGNUP = "/signup"
 export const LOGIN = "/login"
 export const ART = "/art"

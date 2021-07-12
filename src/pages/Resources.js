@@ -1,23 +1,33 @@
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useRef } from "react"
 import { Card, Grid, Placeholder, Container } from 'semantic-ui-react'
 import CardResource from "../CardResource.js"
 import "./items.css"
 import resourceContext from "../context/resource.js"
 
-function Resources({page}) {
+function Resources({page, location}) {
     const {resources, setResources, setFullList} = useContext(resourceContext)
+    let goTo = useRef(null)
     useEffect(() => {
         async function getResource() {
             const response = await fetch(`http://acnhapi.com/v1/${page}`)
             const data = await response.json()
-            setResources(Object.values(data))
-            setFullList(Object.values(data))
+            let newResources = Object.values(data)
+            let temp = newResources.map(e => {
+                return {...e, path: location.pathname}
+            })
+            setResources(temp)
+            setFullList(temp)
         }
         getResource()
-    }, [setResources, setFullList, page])
+    }, [setResources, setFullList, page, location.pathname])
     useEffect(() => {
         document.title = `${page} - ANCH Items and Info`
     }, [page])
+    useEffect(() => {
+        if (goTo.current !== null) {
+            goTo.current.scrollIntoView({behavior: "smooth"})
+        }
+    }, [goTo])
     return (
         <Container>
             <Grid columns={5} id="gridbugs">
@@ -48,8 +58,8 @@ function Resources({page}) {
                     :
                     resources.map((bug) => {
                         return (
-                            <Grid.Column key={bug.id} stretched={true}>
-                                <CardResource resource={bug}></CardResource>
+                            <Grid.Column key={bug.id + bug.name["name-USen"]} stretched={true}>
+                                <CardResource resource={bug} goTo={goTo} gotoName={location.state}></CardResource>
                             </Grid.Column>
                         )
                     })

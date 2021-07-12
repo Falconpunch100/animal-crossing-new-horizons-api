@@ -1,12 +1,13 @@
 import { Card, Icon, Modal, Button, Transition } from 'semantic-ui-react'
 import { useState, useEffect, useContext } from "react"
-import { getDate, capitalizeWords } from "./utils.js"
+import { getDate, capitalizeWords, findByName } from "./utils.js"
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import BottombarContext from './context/bottombar.js'
 
-function CardResource({ resource }) {
+function CardResource({ resource, goTo, gotoName }) {
     let [open, setOpen] = useState(false)
     let [trans, setTrans] = useState(false)
+
     const { items, setItems } = useContext(BottombarContext)
     useEffect(() => {
         setTrans(true)
@@ -20,7 +21,7 @@ function CardResource({ resource }) {
             >
                 <Modal.Header>{capitalizeWords(resource?.name["name-USen"])}</Modal.Header>
                 <Modal.Content image>
-                    <LazyLoadImage src={resource?.image_uri} alt={resource?.name} />
+                    <LazyLoadImage src={resource?.image_uri} alt={resource?.name} className="modalCard"/>
                     <Modal.Description className="resourceDesc">
                         {resource?.["buy-price"] && <p className='date'>Buy Price: {resource?.price || resource?.["buy-price"]} {" "}<Icon name="star" /></p>}
                         <p className='date'>Sell Price: {resource?.price || resource?.["sell-price"]} {" "}<Icon name="star" /></p>
@@ -37,7 +38,7 @@ function CardResource({ resource }) {
                 </Modal.Actions>
             </Modal>
             <Transition animation={"fade in"} duration={500} visible={trans}>
-                <Card className="card" id={resource?.name["name-USen"]} onClick={() => {
+                <Card className="card" id={resource?.name["name-USen"]} ref={gotoName === resource?.name["name-USen"] ? goTo : null} onClick={() => {
                     setOpen(true)
                 }}>
                     <LazyLoadImage src={resource?.icon_uri || resource?.image_uri} className="imageCard" alt={resource?.name} />
@@ -48,7 +49,7 @@ function CardResource({ resource }) {
                             <p className='date'>Sell Price: {resource?.price || resource?.["sell-price"]} {" "}<Icon name="star" /></p>
                         </Card.Meta>
                         <Card.Meta>
-                            {resource?.availablity?.rarity !== undefined ?
+                            {resource?.availability?.rarity !== undefined ?
                                 <span className='date'>Rarity: {resource?.availability?.rarity} {" "}<Icon name="diamond" /></span>
                                 : null}
 
@@ -64,11 +65,18 @@ function CardResource({ resource }) {
                         </Card.Content>
                         : null}
                     <Card.Content extra>
-                        <Button onClick={e => {
+                        <Button disabled={findByName(items, resource?.name["name-USen"])} onClick={e => {
                             e.stopPropagation()
-                            const copy = items.slice()
-                            copy.push(resource)
-                            setItems(copy)
+                            if (items === null) {
+                                const copy = []
+                                copy.push(resource)
+                                setItems(copy)
+                            }
+                            else if (findByName(items, resource?.name["name-USen"]) === false) {
+                                const copy = items.slice()
+                                copy.push(resource)
+                                setItems(copy)
+                            }
                         }} style={{backgroundColor: "lightgreen"}}>Add To My List</Button>
                     </Card.Content>
                 </Card>

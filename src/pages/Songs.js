@@ -4,17 +4,21 @@ import SoundResource from ".././SoundResource.js"
 import "../SoundResource.css"
 import resourceContext from "../context/resource.js"
 
-function Songs({ page }) {
+function Songs({ page, location }) {
     const { resources, setResources, setFullList } = useContext(resourceContext)
     useEffect(() => {
         async function getSongs() {
             const response = await fetch(`http://acnhapi.com/v1/${page}/`)
             const data = await response.json()
-            setResources(Object.values(data))
-            setFullList(Object.values(data))
+            let newResources = Object.values(data)
+            let temp = newResources.map(e => {
+                return {...e, path: location.pathname}
+            })
+            setResources(temp)
+            setFullList(temp)
         }
         getSongs()
-    }, [setResources, setFullList, page])
+    }, [setResources, setFullList, page, location.pathname])
     return (
 
         <Container fluid>

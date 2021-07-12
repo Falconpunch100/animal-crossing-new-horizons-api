@@ -9,3 +9,40 @@
     z-index: 5;
   }
 
+#horizontalscroll {
+  display: flex;
+  overflow-x: scroll;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.bar_image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+}
+
+.itemDesc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 10rem;
+}
+
+#noItems {
+  padding: 50px;
+}
+
+#bottomBarMP3 {
+  width: 15%;
+}
+
+a {
+  color: black;
+}
+a:hover {
+   color: rgb(56, 192, 29)
+}
