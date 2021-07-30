@@ -78,7 +78,7 @@ function Navbar() {
                     /></Link>
                 <Link to={BGM} onClick={() => { if (location.pathname !== SONGS) { setResources(null); setFullList(null); setVisible(false) } }}>
                     <Menu.Item
-                        name='backgroundmusic'
+                        name='background_music'
                         active={activeItem === 'backgroundmusic'}
                         onClick={handleItemClick}
                         as={"li"}

@@ -5,9 +5,10 @@
   font-style: normal;
 }
 
-body #root {
-  margin-top: 5rem;
+#acbody {
+  margin-top: 4rem;
   font-family: FinkHeavy;
+  background-color: rgb(176, 255, 176);
 }
 
 #root .ui.card > .content > .header, .ui.cards > .card > .content > .header {

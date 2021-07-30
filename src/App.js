@@ -1,6 +1,6 @@
 import 'semantic-ui-css/semantic.min.css'
 import { Loader, Sidebar } from "semantic-ui-react"
-import { Route, BrowserRouter } from "react-router-dom"
+import { Route, BrowserRouter, Switch } from "react-router-dom"
 import { HOMEPAGE, BUGS, FISH, SEACREATURES, FOSSILS, ART, SONGS, BGM, VILLAGERS } from "./routes/routes.js"
 import { lazy, Suspense } from "react"
 import Navbar from "./Navbar.js"
@@ -22,6 +22,9 @@ const Songs = lazy(() => {
 const Villagers = lazy(() => {
   return import("./pages/Villagers.js")
 })
+const NotFound = lazy(() => {
+  return import("./pages/NotFound.js")
+})
 
 function App() {
   const [resources, setResources] = useState(null)
@@ -31,33 +34,36 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <BottombarContext.Provider value={{
-          visible, setVisible, items, setItems
-        }}>
-          <resourceContext.Provider value={{
-            resources, setResources, fullList, setFullList
+        <Switch>
+          <BottombarContext.Provider value={{
+            visible, setVisible, items, setItems
           }}>
-            <Navbar></Navbar>
-            <Suspense fallback={<Loader active={true} size="huge"></Loader>}>
-              <Sidebar.Pushable id="pushbar">
-                <BottomBar></BottomBar>
-                <Sidebar.Pusher>
-                  <Route path={HOMEPAGE}>
-                    <HomePage></HomePage>
-                  </Route>
-                  <Route path={BUGS} render = {(routeProps) => {return <Resources page={"bugs"} {...routeProps}></Resources>}}></Route>
-                  <Route path={FISH} render = {(routeProps) => {return <Resources page={"fish"} {...routeProps}></Resources>}}></Route>
-                  <Route path={SEACREATURES} render = {(routeProps) => {return <Resources page={"sea"} {...routeProps}></Resources>}}></Route>
-                  <Route path={FOSSILS} render = {(routeProps) => {return <Resources page={"fossils"} {...routeProps}></Resources>}}></Route>
-                  <Route path={ART} render = {(routeProps) => {return <Resources page={"art"} {...routeProps}></Resources>}}></Route>
-                  <Route path={SONGS} render = {(routeProps) => {return <Songs page={"songs"} {...routeProps}></Songs>}}></Route>
-                  <Route path={BGM} render = {(routeProps) => {return <Songs page={"backgroundmusic"} {...routeProps}></Songs>}}></Route>
-                  <Route path={VILLAGERS} render = {(routeProps) => {return <Villagers page={"villagers"} {...routeProps}></Villagers>}}></Route>
-                </Sidebar.Pusher>
-              </Sidebar.Pushable>
-            </Suspense>
-          </resourceContext.Provider>
-        </BottombarContext.Provider>
+            <resourceContext.Provider value={{
+              resources, setResources, fullList, setFullList
+            }}>
+              <Navbar></Navbar>
+              <Suspense fallback={<Loader active={true} size="huge"></Loader>}>
+                <Sidebar.Pushable id="pushbar">
+                  <BottomBar></BottomBar>
+                  <Sidebar.Pusher>
+                    <Route path={HOMEPAGE} exact>
+                      <HomePage></HomePage>
+                    </Route>
+                    <Route path={BUGS} render={(routeProps) => { return <Resources page={"bugs"} {...routeProps}></Resources> }}></Route>
+                    <Route path={FISH} render={(routeProps) => { return <Resources page={"fish"} {...routeProps}></Resources> }}></Route>
+                    <Route path={SEACREATURES} render={(routeProps) => { return <Resources page={"sea"} {...routeProps}></Resources> }}></Route>
+                    <Route path={FOSSILS} render={(routeProps) => { return <Resources page={"fossils"} {...routeProps}></Resources> }}></Route>
+                    <Route path={ART} render={(routeProps) => { return <Resources page={"art"} {...routeProps}></Resources> }}></Route>
+                    <Route path={SONGS} render={(routeProps) => { return <Songs page={"songs"} {...routeProps}></Songs> }}></Route>
+                    <Route path={BGM} render={(routeProps) => { return <Songs page={"backgroundmusic"} {...routeProps}></Songs> }}></Route>
+                    <Route path={VILLAGERS} render={(routeProps) => { return <Villagers page={"villagers"} {...routeProps}></Villagers> }}></Route>
+                    <Route render={(routeProps) => { return <NotFound {...routeProps}></NotFound> }}></Route>
+                  </Sidebar.Pusher>
+                </Sidebar.Pushable>
+              </Suspense>
+            </resourceContext.Provider>
+          </BottombarContext.Provider>
+        </Switch>
       </BrowserRouter>
     </div>
   );

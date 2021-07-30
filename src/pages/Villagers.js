@@ -82,6 +82,3 @@ function Villagers({location}) {
 }
 
 export default Villagers;
-
-//bubble-color (change the style of the border and background color)
-//text-color (change the style of the border and background color)
